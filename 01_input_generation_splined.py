@@ -164,3 +164,4 @@ for target in targets:
     
 with open("splined_trajectories_3.txt", "wb") as fp:   #Pickling
     pickle.dump(output, fp)
+    

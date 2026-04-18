@@ -1,0 +1,11 @@
+trajectory_images/
+trajectory_dataset.pt
+
+# PyTorch datasets / models
+*.pt
+*.pth
+
+# Large data files
+*.npy
+*.npz
+*.h5
