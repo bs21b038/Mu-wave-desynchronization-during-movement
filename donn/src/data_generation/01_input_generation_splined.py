@@ -6,6 +6,10 @@ import random
 import matplotlib.pyplot as plt
 import pickle
 
+from pathlib import Path
+
+ROOT = Path(__file__).resolve().parent
+
 def get_angle_wrt_x_axis(pt1,pt2):
     ang = abs(atan((pt2[1]-pt1[1])/(pt2[0]-pt1[0])))
     
@@ -70,12 +74,18 @@ def get_circle_params(pt1,pt2,tang):
     return c, r, 2*ang
 
 # Load distance vs time
-with open("time_vs_dist.txt",'rb') as fp:
+with open(ROOT / "time_vs_dist.txt", "rb") as fp:
     d_vs_t = pickle.load(fp)
     d_vs_t = np.array(d_vs_t)
     time_perc = d_vs_t[:,0]
     dist_perc = d_vs_t[:,1]
     
+print("First 10 distance percentages:")
+print(dist_perc[:10])
+
+print("\nLast 10 distance percentages:")
+print(dist_perc[-10:])
+
 # Initialize parameters
 arm_left = [-0.15,0]    
 arm_right = [0.15,0]
@@ -97,6 +107,9 @@ for x in X:
 # Home position
 home_left = forward_left([0.8,0.2,0.8,0.2])
 home_right = forward_right([0.8,0.2,0.8,0.2])
+
+print("home_left =", home_left)
+print("home_right =", home_right)
 
 # Output array for all targets
 output = []
@@ -162,6 +175,12 @@ for target in targets:
 
     output.append(end_effectors)
     
-with open("splined_trajectories_3.txt", "wb") as fp:   #Pickling
+with open(
+    ROOT.parent.parent
+    / "data"
+    / "raw"
+    / "splined_trajectories_3.txt",
+    "wb"
+) as fp:
     pickle.dump(output, fp)
     
